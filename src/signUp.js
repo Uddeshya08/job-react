@@ -58,37 +58,65 @@ export default function SignUp() {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="Username"
                   name="email"
-                  autoComplete="email"
+                  autoComplete="User Name"
+                  margin="normal"
+                />
+              <Grid item xs={12}>
+                <TextField
+                  autoComplete="given-name"
+                  name="FullName"
+                  required
+                  fullWidth
+                  id="fullName"
+                  label="Full Name"
+                  autoFocus
+                  margin="normal"
                 />
               </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  autoComplete="Skills"
+                  name="Primary Skill"
+                  required
+                  fullWidth
+                  id="skills"
+                  label="Primary Skill"
+                  autoFocus
+                  margin="normal"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  autoComplete="Skills"
+                  name="Years of Experience"
+                  required
+                  type="number"
+                  fullWidth
+                  id="skills"
+                  label="Experience"
+                  autoFocus
+                  margin="normal"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  autoComplete="location"
+                  name="Location"
+                  required
+                  fullWidth
+                  id="location"
+                  label="Location"
+                  autoFocus
+                  margin="normal"
+                />
+              </Grid>   
               <Grid item xs={12}>
                 <TextField
                   required
@@ -98,13 +126,15 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  margin="normal"
                 />
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
+                  label="I agree to the terms & conditions."
                 />
+              </Grid>
               </Grid>
             </Grid>
             <Button

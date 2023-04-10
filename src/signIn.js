@@ -61,9 +61,9 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
+              id="username"
+              label="User Name"
+              name="Username"
               autoComplete="email"
               autoFocus
             />

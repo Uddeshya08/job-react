@@ -18,9 +18,12 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 //import Chart from './Chart';
-import Deposits from './Deposits';
+import ProfileCard from './Profile';
 import Orders from './Orders';
+import OutlinedCard from './cardtop';
+
 
 function Copyright(props) {
   return (
@@ -118,11 +121,11 @@ function DashboardContent() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Job Portal
+              Welcome to Job Portal
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
+               <NotificationsIcon/>
               </Badge>
             </IconButton>
           </Toolbar>
@@ -151,7 +154,7 @@ function DashboardContent() {
           component="main"
           sx={{
             backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
+              theme.palette.mode === 'dark'
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
             flexGrow: 1,
@@ -161,9 +164,13 @@ function DashboardContent() {
           
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <h1 style={{textAlign:'center'}}>Welcome to Job Portal</h1>
-           
+
+          {/* Dropdown buttons card code start here  */}
+
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4}}>
+            <h1 style={{textAlign:'center', color:'white'}}>
+              <BusinessCenterIcon /> Recommended Jobs for you </h1>
+           <OutlinedCard/>
           </Container>
         </Box>
       </Box>
