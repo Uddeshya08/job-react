@@ -1,0 +1,33 @@
+#server:
+#  port: 8082
+#
+#spring:
+#  datasource:
+#    platform: postgres
+#    url: jdbc:postgresql://localhost:5432/smoney-user
+#    username: postgres
+#    password: root
+#    driver-class-name: org.postgresql.Driver
+#
+#  jpa:
+#    database: POSTGRESQL
+#    hibernate:
+#      ddl-auto: update
+#      sho-sql: true
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+#        current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+#  application:
+#    name: authentication-service
+#
+##eureka:
+##  client:
+##    serviceUrl:
+##      defaultZone: http://localhost:8761/eureka
+##    preferIpAddress: true
+#
+#eureka:
+#  client:
+#    registerWithEureka: false
+#    fetchRegistry: false
