@@ -19,9 +19,6 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
-//import Chart from './Chart';
-import ProfileCard from './Profile';
-import Orders from './Orders';
 import OutlinedCard from './cardtop';
 
 
