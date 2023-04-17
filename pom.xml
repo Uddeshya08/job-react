@@ -73,11 +73,12 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.smoney.user.service</groupId>
-			<artifactId>smoney-user</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+			<version>3.0.5</version>
 			<scope>compile</scope>
 		</dependency>
+
 	</dependencies>
 
 	<build>

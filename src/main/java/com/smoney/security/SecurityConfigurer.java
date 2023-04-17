@@ -3,6 +3,7 @@ package com.smoney.security;
 import com.smoney.filter.JwtRequestFilter;
 import com.smoney.service.SmoneyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,6 +19,9 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 @EnableWebSecurity
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
@@ -38,10 +42,12 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         http.csrf().disable().authorizeHttpRequests()
                 .antMatchers("/authenticate").permitAll()
                 .antMatchers("/user/*").permitAll()
+                .antMatchers("/user/getUser/*").permitAll()
 //                .antMatchers("/auth/*").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.cors();
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
@@ -55,4 +61,5 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     public PasswordEncoder getPasswordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }
+
 }

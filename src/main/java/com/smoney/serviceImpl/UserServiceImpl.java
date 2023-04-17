@@ -1,5 +1,6 @@
 package com.smoney.serviceImpl;
 
+import com.smoney.dto.UserRequest;
 import com.smoney.entity.User;
 import com.smoney.repository.UserJpaRepository;
 import com.smoney.repositoryImpl.UserRepositoryImpl;
@@ -18,12 +19,18 @@ public class UserServiceImpl implements UserService {
     private UserRepositoryImpl userRepositoryImpl;
 
     @Override
-    public User save(User user) {
-        return userJpaRepository.save(user);
+    public User save(UserRequest userRequest) {
+        return userJpaRepository.save(User.build(0L, userRequest.getUsername(), userRequest.getFirstName(),
+                userRequest.getLastName(), userRequest.getPassword(), userRequest.getRoles(), userRequest.getEmail(),
+                userRequest.getMobileNo(), userRequest.getLocation(), userRequest.getSkills()));
     }
 
     @Override
-    public Optional<User> findByUsername(User user) {
-        return userJpaRepository.findByUsername(user.getUsername());
+    public Optional<User> findByUsername(String userName) {
+        return userJpaRepository.findByUsername(userName);
+    }
+
+    public User findUserById(Long id) {
+        return userJpaRepository.findById(id).get();
     }
 }

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Data
-@AllArgsConstructor
+@AllArgsConstructor(staticName = "build")
 @NoArgsConstructor
 @Entity
 @Table(name = "Users")
@@ -32,6 +32,12 @@ public class User {
 
     @Column(name = "ROLES")
     private String roles;
+
+    @Column(name = "EMAIL")
+    private String email;
+
+    @Column(name = "MOBILE_NO")
+    private String mobileNo;
 
     @Column(name = "LOCATION")
     private String location;
