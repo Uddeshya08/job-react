@@ -20,6 +20,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import OutlinedCard from './cardtop';
+import ComplexGrid from './Joblist';
 
 
 function Copyright(props) {
@@ -169,6 +170,7 @@ function DashboardContent() {
               <BusinessCenterIcon /> Recommended Jobs for you </h1>
            <OutlinedCard/>
           </Container>
+          <ComplexGrid></ComplexGrid>
         </Box>
       </Box>
     </ThemeProvider>

@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useState } from "react";
+import { useLocalStorage } from "./localstorage/UserLocalStorage";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,6 +14,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -28,15 +31,41 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+const SignIn = (props) => {
+  const[username, setUsername] = useState('');
+  const[password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const[jwt, setJwtLocal] = useLocalStorage("", "jwt");
+
+  const loginUser = (e) => {
+      const requestBody = {
+          username: username,
+          password: password
+      }
+      e.preventDefault();
+      if(!username || !password){
+          alert("Please enter credentials");
+          return;
+      }
+
+      fetch("http://localhost:8082/authenticate", {
+          headers: {
+              "Content-Type": "application/json"
+          },
+          method: "post",
+          body: JSON.stringify(requestBody)
+      }).then((response) => (response.json()))
+      .then((jsonResponse) => {
+          setJwtLocal(jsonResponse.jwt);
+          
+      })
+      .then(
+          navigate("/dashboard")
+      )
+      console.log(requestBody)
+  }
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -56,12 +85,14 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={loginUser} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
               fullWidth
               id="username"
+              value={username}
+              onChange={(e) => setUsername(e.currentTarget.value)}
               label="User Name"
               name="Username"
               autoComplete="email"
@@ -72,6 +103,8 @@ export default function SignIn() {
               required
               fullWidth
               name="password"
+              value={password}
+              onChange={(e) => setPassword(e.currentTarget.value)}
               label="Password"
               type="password"
               id="password"
@@ -108,3 +141,4 @@ export default function SignIn() {
     </ThemeProvider>
   );
 }
+export default SignIn;

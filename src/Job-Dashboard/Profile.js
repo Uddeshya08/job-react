@@ -55,7 +55,7 @@ export default function ProfileCard() {
     gap: 1,
   }}
 >
-<Item sx={{ gridRow: '1', gridColumn: '5/5' }}>{profile}</Item>
+<Item sx={{ gridRow: '1', gridColumn: '3/5' }}>{profile}</Item>
     </Box>
   );
 }

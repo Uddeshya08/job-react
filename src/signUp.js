@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from "react";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,6 +13,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { signup } from './Services/User_Service';
+import axios from 'axios';
+import { useNavigate } from "react-router-dom"
 
 function Copyright(props) {
   return (
@@ -26,18 +30,103 @@ function Copyright(props) {
   );
 }
 
-const theme = createTheme();
 
-export default function SignUp() {
-  const handleSubmit = (event) => {
+const Signup = () => {
+  const[username, setUsername] = useState('');
+  const[password, setPassword] = useState('');
+  const[email, setEmail] = useState('');
+  const[firstName, setFirstname] = useState('');
+  const[lastName, setLastname] = useState('');
+  const[skills, setSkill] = useState('');
+  //const[experience, setExperience] = useState('');
+  const[location, setLocation] = useState('');
+  const[roles, setRoles] = useState('');
+  const[mobileNo, setMobileNo] = useState('');
+  const navigate = useNavigate();
+
+  const signupUser = (event) => {
+    const requestBody = {
+        username: username,
+        password: password,
+        email: email,
+      //  experience:experience,
+        firstName:firstName,
+        lastName:lastName,
+        skills: skills,
+        roles: roles,
+        mobileNo: mobileNo
+    }
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+  
+    signup(JSON.stringify(requestBody))
+    .then((resp) => {
+        console.log(resp);
+        console.log("success log")
+        
+        
+    }).then(navigate("/signin"))
 
+    console.log(requestBody);
+  
+  
+
+
+
+
+
+  //  fetch("http://localhost:8082/user/register", {
+  //           headers: {
+  //               "Content-Type": "application/json"
+  //           },
+  //           method: "post",
+  //           body: JSON.parse(requestBody)
+  //       }).then((response) => (response.json()))
+        
+
+
+  }
+    
+
+
+  
+
+   //reseting the form
+  //  const resetData = () => {
+  //   setData({
+  //     username: "",
+  //     email: "",
+  //     firstname: "",
+  //     lastname: "",
+  //     skill: "",
+  //     experience: "",
+  //     location: "",
+  //     password: ""
+  //   });
+  // };
+
+  
+    
+    //data validate
+    //console.log(data);
+
+    //call server api for sending data
+    // signup(data).then((resp)=>
+    // {
+    //   console.log(resp);
+    //   console.log("success log");
+    // }).catch((error) => {
+    //   console.log(error);
+    //   console.log("Error log");
+    //   //handle errors in proper way
+    // });
+
+
+
+  const theme = createTheme();
+
+
+  
+  
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -56,26 +145,57 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" noValidate onSubmit={signupUser} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  id="email"
+                  id="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.currentTarget.value)}
                   label="Username"
-                  name="email"
+                  name="username"
                   autoComplete="User Name"
+                  margin="normal"
+                />
+                <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="email"
+                  type='email'
+                  value={email}
+                  onChange={(e) => setEmail(e.currentTarget.value)}
+                  label="E-mail"
+                  name="email"
+                  autoComplete="Email"
                   margin="normal"
                 />
               <Grid item xs={12}>
                 <TextField
                   autoComplete="given-name"
-                  name="FullName"
+                  name="firstame"
+                  value={firstName}
+                  onChange={(e) => setFirstname(e.currentTarget.value)}
                   required
                   fullWidth
-                  id="fullName"
-                  label="Full Name"
+                  id="firstname"
+                  label="First Name"
+                  autoFocus
+                  margin="normal"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  autoComplete="given-name"
+                  name="lastname"
+                  value={lastName}
+                  onChange={(e) => setLastname(e.currentTarget.value)}
+                  required
+                  fullWidth
+                  id="lastname"
+                  label="Last Name"
                   autoFocus
                   margin="normal"
                 />
@@ -83,7 +203,9 @@ export default function SignUp() {
               <Grid item xs={12}>
                 <TextField
                   autoComplete="Skills"
-                  name="Primary Skill"
+                  name="skills"
+                  value={skills}
+                  onChange={(e) => setSkill(e.currentTarget.value)}
                   required
                   fullWidth
                   id="skills"
@@ -92,23 +214,27 @@ export default function SignUp() {
                   margin="normal"
                 />
               </Grid>
-              <Grid item xs={12}>
+               <Grid item xs={12}>
                 <TextField
-                  autoComplete="Skills"
-                  name="Years of Experience"
+                  autoComplete="mobileNo"
+                  name="MobileNo"
+                  value={mobileNo}
+                  onChange={(e) => setMobileNo(e.currentTarget.value)}
                   required
                   type="number"
                   fullWidth
-                  id="skills"
-                  label="Experience"
+                  id="mobileNo"
+                  label="Mobile No."
                   autoFocus
                   margin="normal"
                 />
-              </Grid>
+              </Grid> 
               <Grid item xs={12}>
                 <TextField
                   autoComplete="location"
-                  name="Location"
+                  name="location"
+                  value={location}
+                  onChange={(e) => setLocation(e.currentTarget.value)}
                   required
                   fullWidth
                   id="location"
@@ -122,12 +248,15 @@ export default function SignUp() {
                   required
                   fullWidth
                   name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.currentTarget.value)}
                   label="Password"
                   type="password"
                   id="password"
                   autoComplete="new-password"
                   margin="normal"
                 />
+              </Grid>
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
@@ -158,4 +287,8 @@ export default function SignUp() {
       </Container>
     </ThemeProvider>
   );
+
+
 }
+
+export default Signup;
