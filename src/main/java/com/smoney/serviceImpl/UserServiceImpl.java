@@ -30,6 +30,9 @@ public class UserServiceImpl implements UserService {
         return userJpaRepository.findByUsername(userName);
     }
 
+
+
+
     public User findUserById(Long id) {
         return userJpaRepository.findById(id).get();
     }

@@ -28,6 +28,12 @@ public class Job implements Serializable {
     @Column(name = "LOCATION")
     private String location;
 
+    @Column(name = "COMPANY")
+    private String company;
+
+    @Column(name = "EXPERIENCE")
+    private int experience;
+
     @Column(name = "SKILL")
     private String skill;
 

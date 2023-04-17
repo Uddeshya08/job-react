@@ -26,7 +26,7 @@ public class JobDaoImpl implements JobDao {
     @Override
     public List<Job> getJobsBasedOnSkillAndLocationAndUser(User user) {
         Session session = this.sessionFactory.getCurrentSession();
-        List<Job> jobList = session.createNativeQuery("select * from Jobs where skill IN (:skills)").setParameter("skills", Arrays.asList(user.getSkills().split(","))).getResultList();
+        List<Job> jobList = session.createNativeQuery("select * from Jobs where location=:location AND skill IN (:skills)").setParameter("skills", Arrays.asList(user.getSkills().split(","))).setParameter("location",user.getLocation()).getResultList();
         return jobList;
     }
 }

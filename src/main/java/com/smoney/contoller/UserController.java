@@ -32,10 +32,16 @@ public class UserController {
             return new ResponseEntity<>(userService.save(user), HttpStatus.CREATED);
     }
 
-    @PostMapping("/getJobs")
-    public ResponseEntity<List<Job>> getJobsBasedOnSkillAndLocationAndUser(@RequestBody User user) {
-        return ResponseEntity.ok(jobService.getJobsBasedOnSkillAndLocationAndUser(user));
+//    @PostMapping("/getJobs")
+//    public ResponseEntity<List<Job>> getJobsBasedOnSkillAndLocationAndUser(@RequestBody User user) {
+//        return ResponseEntity.ok(jobService.getJobsBasedOnSkillAndLocationAndUser(userId));
+//    }
+
+    @GetMapping("/getJobs/{userId}")
+    public ResponseEntity<List<Job>> getJobsBasedOnSkillAndLocationAndUser(@PathVariable("userId") Long userId) {
+        return ResponseEntity.ok(jobService.getJobsBasedOnSkillAndLocationAndUser(userId));
     }
+
 
     @GetMapping("/getUser/{id}")
     public User getUser(@PathVariable("id") Long id) {

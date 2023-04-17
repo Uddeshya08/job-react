@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface JobService {
 
-    public List<Job> getJobsBasedOnSkillAndLocationAndUser(User user);
+    public List<Job> getJobsBasedOnSkillAndLocationAndUser(Long userId);
 
 }
