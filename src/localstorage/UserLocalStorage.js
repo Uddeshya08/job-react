@@ -1,17 +1,19 @@
 import { useState, useEffect } from "react";
 
-const useLocalStorage = (defaultValue, key) => {
-
-    const[value, setValue] = useState(() => {
-        const localStorageValue = localStorage.getItem(key);
-        return localStorageValue != null ? JSON.parse(localStorageValue) : defaultValue;
-    })
-
-    useEffect (() => {
-        localStorage.setItem(key, JSON.stringify(value));
-    }, [key, value]);
-
-    return [value, setValue];
+export const setJwtLocal = (data, next) => {
+    localStorage.setItem("jwt", data);
+    next();
 }
 
-export { useLocalStorage }
+export const setUserId = (data, next) => {
+    localStorage.setItem("userId", data);
+    next();
+}
+
+export const getUserId = (key, next) => {
+    localStorage.getItem(key);
+}
+
+export const getJwtLocal = (key, next) => {
+    localStorage.getItem(key);
+}

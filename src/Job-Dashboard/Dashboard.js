@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -21,7 +22,41 @@ import { mainListItems, secondaryListItems } from './listItems';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import OutlinedCard from './cardtop';
 import ComplexGrid from './Joblist';
+import axios from "axios"
 
+//const baseUrl = "http://localhost:8082"
+
+
+const userid= localStorage.getItem("userId")
+export const fetchjobList = async () => {
+  //const jobListUrl = `${baseUrl}/user/getJobs?${params}`
+  const jobListUrl = 'http://localhost:8082/user/getJobs/'+userid
+  try {
+    const response = await axios.get(jobListUrl)
+    console.log(response)
+    return response
+  } catch (e) {
+    throw new Error(e)
+  }
+
+}
+function JobList() {
+  const [jobList, setJobList] = useState('');
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetchjobList();
+        setJobList(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchData();
+  }, []);
+
+  return jobList;
+}
 
 function Copyright(props) {
   return (
@@ -85,12 +120,15 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const mdTheme = createTheme();
 
 function DashboardContent() {
+
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
+
   };
 
   return (
+
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
@@ -170,7 +208,7 @@ function DashboardContent() {
               <BusinessCenterIcon /> Recommended Jobs for you </h1>
            <OutlinedCard/>
           </Container>
-          <ComplexGrid></ComplexGrid>
+          <ComplexGrid data={JobList()}/>
         </Box>
       </Box>
     </ThemeProvider>

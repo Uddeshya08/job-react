@@ -12,7 +12,8 @@ const Img = styled('img')({
   maxHeight: '100%',
 });
 
-export default function ComplexGrid() {
+export default function ComplexGrid({data}) {
+  console.log(data)
   return (
     <Paper
       sx={{
@@ -24,7 +25,9 @@ export default function ComplexGrid() {
           theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
       }}
     >
+
       <Grid container spacing={2}>
+        
         <Grid item xs={12} sm container>
           <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>

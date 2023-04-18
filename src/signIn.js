@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useState } from "react";
-import { useLocalStorage } from "./localstorage/UserLocalStorage";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,6 +14,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from "react-router-dom";
+import {setJwtLocal, getJwtLocal, setUserId, getUserId} from "./localstorage/UserLocalStorage"
+
 
 function Copyright(props) {
   return (
@@ -36,36 +37,77 @@ const SignIn = (props) => {
   const[password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const[jwt, setJwtLocal] = useLocalStorage("", "jwt");
+ //const[jwt, setJwtLocal] = useLocalStorage("", "jwt");
+
 
   const loginUser = (e) => {
-      const requestBody = {
-          username: username,
-          password: password
-      }
-      e.preventDefault();
-      if(!username || !password){
-          alert("Please enter credentials");
-          return;
-      }
+    const requestBody = {
+        username: username,
+        password: password
+    }
+    e.preventDefault();
+    if(!username || !password){
+        alert("Please enter credentials");
+        return;
+    }
 
-      fetch("http://localhost:8082/authenticate", {
-          headers: {
-              "Content-Type": "application/json"
-          },
-          method: "post",
-          body: JSON.stringify(requestBody)
-      }).then((response) => (response.json()))
-      .then((jsonResponse) => {
-          setJwtLocal(jsonResponse.jwt);
-          
+    fetch("http://localhost:8082/authenticate", {
+        headers: {
+            "Content-Type": "application/json"
+        },
+        method: "post",
+        body: JSON.stringify(requestBody)
+    }).then((response) => (response.json()))
+    .then((jsonResponse) => {
+        // setJwtLocal(jsonResponse.jwt);
+        setJwtLocal(jsonResponse.jwt, () => {
+            console.log("Jwt token is saved" + jsonResponse.jwt);
+        })
+        setUserId(jsonResponse.userId, () => {
+          console.log("UserId is saved" + jsonResponse.userId);
       })
-      .then(
-          navigate("/dashboard")
-      )
-      console.log(requestBody)
-  }
 
+    })
+    .then(
+        navigate("/dashboard")
+    )
+}
+
+
+
+
+  // const loginUser = (e) => {
+  //     const requestBody = {
+  //         username: username,
+  //         password: password
+  //     }
+  //     e.preventDefault();
+  //     if(!username || !password){
+  //         alert("Please enter credentials");
+  //         return;
+  //     }
+
+  //     fetch("http://localhost:8082/authenticate", {
+  //         headers: {
+  //             "Content-Type": "application/json"
+  //         },
+  //         method: "post",
+  //         body: JSON.stringify(requestBody)
+  //     }).then((response) => (response.json()))
+  //     .then((jsonResponse) => {
+  //       console.log(jsonResponse)
+  //         setJwtLocal(jsonResponse.jwt);
+  //         localStorage.setItem("customer",jsonResponse.id)
+          
+  //     })
+  //     .then(
+  //         navigate("/dashboard")
+  //     )
+  //     console.log(requestBody)
+  // }
+  
+      
+    
 
   return (
     <ThemeProvider theme={theme}>
