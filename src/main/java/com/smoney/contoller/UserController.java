@@ -37,6 +37,8 @@ public class UserController {
 //        return ResponseEntity.ok(jobService.getJobsBasedOnSkillAndLocationAndUser(userId));
 //    }
 
+
+    @CrossOrigin
     @GetMapping("/getJobs/{userId}")
     public ResponseEntity<List<Job>> getJobsBasedOnSkillAndLocationAndUser(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(jobService.getJobsBasedOnSkillAndLocationAndUser(userId));

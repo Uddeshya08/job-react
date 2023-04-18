@@ -2,7 +2,9 @@ package com.smoney.contoller;
 
 import com.smoney.dto.AuthenticationRequest;
 import com.smoney.dto.AuthenticationResponse;
+import com.smoney.service.JobService;
 import com.smoney.service.SmoneyUserDetailsService;
+import com.smoney.service.UserService;
 import com.smoney.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +12,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AuthController {
@@ -21,6 +25,9 @@ public class AuthController {
 
     @Autowired
     private SmoneyUserDetailsService userDetailsService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -35,6 +42,7 @@ public class AuthController {
         }
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         final String jwt = jwtUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new AuthenticationResponse(jwt));
+        return ResponseEntity.ok(new AuthenticationResponse(jwt,userService.findByUsername(
+                authenticationRequest.getUsername()).get().getId()));
     }
 }
